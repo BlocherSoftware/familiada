@@ -1,0 +1,67 @@
+{
+  "level": 3,
+  "name": "Poziom 3 – Trudny",
+  "rounds": [
+    {
+      "id": 1,
+      "question": "Co powoduje kłótnie w małżeństwie?",
+      "answers": [
+        { "text": "Pieniądze", "points": 38 },
+        { "text": "Teściowie", "points": 25 },
+        { "text": "Obowiązki domowe", "points": 17 },
+        { "text": "Zazdrość", "points": 12 },
+        { "text": "Pilot do TV", "points": 8 }
+      ],
+      "multiplier": 1
+    },
+    {
+      "id": 2,
+      "question": "Co ludzie kolekcjonują?",
+      "answers": [
+        { "text": "Znaczki", "points": 35 },
+        { "text": "Monety", "points": 28 },
+        { "text": "Karty", "points": 17 },
+        { "text": "Figurki", "points": 12 },
+        { "text": "Magnesy", "points": 8 }
+      ],
+      "multiplier": 1
+    },
+    {
+      "id": 3,
+      "question": "Co robimy, gdy nie możemy zasnąć?",
+      "answers": [
+        { "text": "Liczymy owce", "points": 30 },
+        { "text": "Przeglądamy telefon", "points": 28 },
+        { "text": "Czytamy książkę", "points": 20 },
+        { "text": "Pijemy ciepłe mleko", "points": 14 },
+        { "text": "Oglądamy TV", "points": 8 }
+      ],
+      "multiplier": 2
+    },
+    {
+      "id": 4,
+      "question": "Czego ludzie szukają w portfelu?",
+      "answers": [
+        { "text": "Pieniędzy", "points": 42 },
+        { "text": "Karty płatniczej", "points": 25 },
+        { "text": "Dowodu osobistego", "points": 15 },
+        { "text": "Zdjęcia", "points": 10 },
+        { "text": "Paragonu", "points": 8 }
+      ],
+      "multiplier": 2
+    },
+    {
+      "id": 5,
+      "question": "Co wywołuje nostalgię?",
+      "answers": [
+        { "text": "Stare zdjęcia", "points": 38 },
+        { "text": "Muzyka", "points": 25 },
+        { "text": "Zapachy", "points": 17 },
+        { "text": "Miejsca z dzieciństwa", "points": 12 },
+        { "text": "Stare filmy", "points": 8 }
+      ],
+      "multiplier": 3
+    }
+  ]
+}
+

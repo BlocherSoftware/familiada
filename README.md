@@ -1,36 +1,130 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🎯 Familiada - Teleturniej
 
-## Getting Started
+Aplikacja webowa inspirowana kultowym polskim teleturniejem "Familiada". Zbudowana w **Next.js 16.1.1** z TypeScript i Tailwind CSS.
 
-First, run the development server:
+## 🚀 Technologie
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Next.js 16.1.1** - App Router
+- **React 19** - Functional components, hooks
+- **TypeScript** - Pełne typowanie
+- **Tailwind CSS 4** - Stylowanie
+
+## 📁 Struktura projektu
+
+```
+familiada/
+├── app/
+│   ├── page.tsx                    # Strona główna (menu)
+│   ├── layout.tsx                  # Root layout
+│   ├── globals.css                 # Style globalne + Tailwind
+│   ├── components/
+│   │   ├── GameBoard.tsx           # Główna plansza gry
+│   │   ├── AnswerTile.tsx          # Kafelek odpowiedzi
+│   │   ├── ScoreBoard.tsx          # Tablica wyników
+│   │   └── QuestionDisplay.tsx     # Wyświetlanie pytania
+│   ├── types/
+│   │   └── game.ts                 # Typy TypeScript
+│   └── level/
+│       └── [id]/
+│           ├── page.tsx            # Strona poziomu (server component)
+│           ├── GameClient.tsx      # Logika gry (client component)
+│           └── not-found.tsx       # Strona 404 dla poziomu
+├── public/
+│   └── data/
+│       ├── level-1.json            # Pytania poziomu 1
+│       ├── level-2.json            # Pytania poziomu 2
+│       └── level-3.json            # Pytania poziomu 3
+├── package.json
+├── tsconfig.json
+├── next.config.ts
+└── postcss.config.mjs
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📊 Format danych JSON
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Każdy poziom to plik JSON w `public/data/level-X.json`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```json
+{
+  "level": 1,
+  "name": "Poziom 1 – Łatwy",
+  "rounds": [
+    {
+      "id": 1,
+      "question": "Czego ludzie szukają w lodówce o północy?",
+      "answers": [
+        { "text": "Sera", "points": 35 },
+        { "text": "Wędliny", "points": 28 },
+        { "text": "Jogurtu", "points": 18 },
+        { "text": "Wody", "points": 12 },
+        { "text": "Owoców", "points": 7 }
+      ],
+      "multiplier": 1
+    }
+  ]
+}
+```
 
-## Learn More
+### Struktura danych
 
-To learn more about Next.js, take a look at the following resources:
+| Pole | Typ | Opis |
+|------|-----|------|
+| `level` | number | Numer poziomu |
+| `name` | string | Nazwa poziomu |
+| `rounds` | Round[] | Lista rund |
+| `rounds[].id` | number | ID rundy |
+| `rounds[].question` | string | Pytanie |
+| `rounds[].answers` | Answer[] | Lista odpowiedzi (posortowane wg punktów) |
+| `rounds[].multiplier` | number | Mnożnik punktów (1, 2, lub 3) |
+| `answers[].text` | string | Treść odpowiedzi |
+| `answers[].points` | number | Punkty za odpowiedź |
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎮 Zasady gry
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. **Dwie drużyny** rywalizują o punkty
+2. **Odpowiedzi** są ukryte - kliknij, aby odkryć
+3. **3 błędy** = przeciwnik może ukraść punkty
+4. **Mnożniki** - niektóre rundy mają punkty pomnożone (×2, ×3)
+5. Wygrywa drużyna z większą liczbą punktów
 
-## Deploy on Vercel
+## 🛠️ Instalacja i uruchomienie
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+# Instalacja zależności
+pnpm install
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Tryb deweloperski
+pnpm dev
+
+# Build produkcyjny
+pnpm build
+
+# Uruchomienie produkcyjne
+pnpm start
+```
+
+Aplikacja będzie dostępna pod adresem: http://localhost:3000
+
+## ➕ Dodawanie nowych poziomów
+
+1. Utwórz nowy plik `public/data/level-X.json`
+2. Wypełnij zgodnie z formatem powyżej
+3. Poziom automatycznie pojawi się w menu!
+
+## 🎨 Personalizacja
+
+### Zmiana kolorów
+Edytuj zmienne CSS w `app/globals.css`:
+
+```css
+:root {
+  --familiada-blue: #0a1628;
+  --familiada-gold: #ffd700;
+  --familiada-red: #dc2626;
+  --familiada-green: #16a34a;
+}
+```
+
+## 📝 Licencja
+
+MIT License - używaj dowolnie!

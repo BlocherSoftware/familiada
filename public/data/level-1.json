@@ -1,0 +1,67 @@
+{
+  "level": 1,
+  "name": "Poziom 1 – Łatwy",
+  "rounds": [
+    {
+      "id": 1,
+      "question": "Czego ludzie szukają w lodówce o północy?",
+      "answers": [
+        { "text": "Sera", "points": 35 },
+        { "text": "Wędliny", "points": 28 },
+        { "text": "Jogurtu", "points": 18 },
+        { "text": "Wody", "points": 12 },
+        { "text": "Owoców", "points": 7 }
+      ],
+      "multiplier": 1
+    },
+    {
+      "id": 2,
+      "question": "Co zabieramy na plażę?",
+      "answers": [
+        { "text": "Ręcznik", "points": 40 },
+        { "text": "Krem do opalania", "points": 25 },
+        { "text": "Okulary przeciwsłoneczne", "points": 15 },
+        { "text": "Piłkę", "points": 12 },
+        { "text": "Parasol", "points": 8 }
+      ],
+      "multiplier": 1
+    },
+    {
+      "id": 3,
+      "question": "Co robimy gdy jesteśmy zdenerwowani?",
+      "answers": [
+        { "text": "Chodzimy po pokoju", "points": 32 },
+        { "text": "Jemy słodycze", "points": 24 },
+        { "text": "Krzyczymy", "points": 18 },
+        { "text": "Płaczemy", "points": 14 },
+        { "text": "Gryzemy paznokcie", "points": 12 }
+      ],
+      "multiplier": 2
+    },
+    {
+      "id": 4,
+      "question": "Co kupujemy w kiosku?",
+      "answers": [
+        { "text": "Gazetę", "points": 38 },
+        { "text": "Papierosy", "points": 22 },
+        { "text": "Gumę do żucia", "points": 16 },
+        { "text": "Lody", "points": 14 },
+        { "text": "Los na loterię", "points": 10 }
+      ],
+      "multiplier": 2
+    },
+    {
+      "id": 5,
+      "question": "Co robi człowiek zaraz po przebudzeniu?",
+      "answers": [
+        { "text": "Ziewa", "points": 35 },
+        { "text": "Przeciera oczy", "points": 25 },
+        { "text": "Sięga po telefon", "points": 18 },
+        { "text": "Idzie do łazienki", "points": 14 },
+        { "text": "Sprawdza godzinę", "points": 8 }
+      ],
+      "multiplier": 3
+    }
+  ]
+}
+

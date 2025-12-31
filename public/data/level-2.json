@@ -1,0 +1,67 @@
+{
+  "level": 2,
+  "name": "Poziom 2 – Średni",
+  "rounds": [
+    {
+      "id": 1,
+      "question": "Jakie zwierzę kojarzy się z Polską?",
+      "answers": [
+        { "text": "Orzeł", "points": 42 },
+        { "text": "Żubr", "points": 28 },
+        { "text": "Bocian", "points": 15 },
+        { "text": "Koń", "points": 10 },
+        { "text": "Wilk", "points": 5 }
+      ],
+      "multiplier": 1
+    },
+    {
+      "id": 2,
+      "question": "Co odkładamy na później?",
+      "answers": [
+        { "text": "Sprzątanie", "points": 35 },
+        { "text": "Pracę/naukę", "points": 28 },
+        { "text": "Ćwiczenia", "points": 17 },
+        { "text": "Dietę", "points": 12 },
+        { "text": "Wizytę u lekarza", "points": 8 }
+      ],
+      "multiplier": 1
+    },
+    {
+      "id": 3,
+      "question": "Co psuje się w samochodzie?",
+      "answers": [
+        { "text": "Akumulator", "points": 32 },
+        { "text": "Opony", "points": 24 },
+        { "text": "Hamulce", "points": 18 },
+        { "text": "Klimatyzacja", "points": 14 },
+        { "text": "Światła", "points": 12 }
+      ],
+      "multiplier": 2
+    },
+    {
+      "id": 4,
+      "question": "Czego boją się dzieci?",
+      "answers": [
+        { "text": "Ciemności", "points": 40 },
+        { "text": "Potworów", "points": 25 },
+        { "text": "Dentysty", "points": 15 },
+        { "text": "Pająków", "points": 12 },
+        { "text": "Burzy", "points": 8 }
+      ],
+      "multiplier": 2
+    },
+    {
+      "id": 5,
+      "question": "Co robimy w niedzielę?",
+      "answers": [
+        { "text": "Śpimy", "points": 35 },
+        { "text": "Oglądamy TV", "points": 25 },
+        { "text": "Odwiedzamy rodzinę", "points": 18 },
+        { "text": "Gotujemy obiad", "points": 14 },
+        { "text": "Idziemy do kościoła", "points": 8 }
+      ],
+      "multiplier": 3
+    }
+  ]
+}
+
