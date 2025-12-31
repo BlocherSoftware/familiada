@@ -2,6 +2,7 @@ import Link from "next/link";
 import { promises as fs } from "fs";
 import path from "path";
 import type { LevelData, LevelInfo } from "@/app/types/game";
+import ClearGameStorage from "@/app/components/ClearGameStorage";
 
 async function getLevels(): Promise<LevelInfo[]> {
   const dataDir = path.join(process.cwd(), "public", "data");
@@ -39,6 +40,9 @@ export default async function HomePage() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      {/* Wyczyść zapisane stany gry */}
+      <ClearGameStorage />
+
       {/* Header */}
       <header className="pt-12 pb-8 text-center">
         <div className="relative inline-block">
@@ -50,7 +54,7 @@ export default async function HomePage() {
           <div className="absolute -inset-4 bg-yellow-500/20 blur-3xl -z-10 rounded-full" />
         </div>
         <p className="mt-4 text-xl text-gray-400 font-medium">
-          Klasyczny teleturniej rodzinny
+          Wersja specjalna: Emeryci z kamyka - Sylwester 2025
         </p>
       </header>
 

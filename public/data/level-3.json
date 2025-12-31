@@ -1,28 +1,28 @@
 {
   "level": 3,
-  "name": "Poziom 3 – Trudny",
+  "name": "Poziom 3",
   "rounds": [
     {
       "id": 1,
-      "question": "Co powoduje kłótnie w małżeństwie?",
+      "question": "Jakie zwierzę możesz spotkać podczas spaceru przez pola?",
       "answers": [
-        { "text": "Pieniądze", "points": 38 },
-        { "text": "Teściowie", "points": 25 },
-        { "text": "Obowiązki domowe", "points": 17 },
-        { "text": "Zazdrość", "points": 12 },
-        { "text": "Pilot do TV", "points": 8 }
+        { "text": "Krowę", "points": 35 },
+        { "text": "Zająca", "points": 19 },
+        { "text": "Sarnę", "points": 14 },
+        { "text": "Bociana", "points": 12 },
+        { "text": "Mysz", "points": 7 }
       ],
       "multiplier": 1
     },
     {
       "id": 2,
-      "question": "Co ludzie kolekcjonują?",
+      "question": "Co kupujemy w tubce?",
       "answers": [
-        { "text": "Znaczki", "points": 35 },
-        { "text": "Monety", "points": 28 },
-        { "text": "Karty", "points": 17 },
-        { "text": "Figurki", "points": 12 },
-        { "text": "Magnesy", "points": 8 }
+        { "text": "Pastę do zębów", "points": 33 },
+        { "text": "Krem do rąk", "points": 19 },
+        { "text": "Klej", "points": 14 },
+        { "text": "Farbę", "points": 12 },
+        { "text": "Mleko", "points": 8 }
       ],
       "multiplier": 1
     },
@@ -36,29 +36,53 @@
         { "text": "Pijemy ciepłe mleko", "points": 14 },
         { "text": "Oglądamy TV", "points": 8 }
       ],
-      "multiplier": 2
+      "multiplier": 1
     },
     {
       "id": 4,
-      "question": "Czego ludzie szukają w portfelu?",
+      "question": "Przykład komiksowego Superbohatera",
       "answers": [
-        { "text": "Pieniędzy", "points": 42 },
-        { "text": "Karty płatniczej", "points": 25 },
-        { "text": "Dowodu osobistego", "points": 15 },
-        { "text": "Zdjęcia", "points": 10 },
-        { "text": "Paragonu", "points": 8 }
+        { "text": "Superman", "points": 30 },
+        { "text": "Batman", "points": 24 },
+        { "text": "Spider-Man", "points": 17 },
+        { "text": "Iron Man", "points": 9 },
+        { "text": "Captain America", "points": 8 }
       ],
       "multiplier": 2
     },
     {
       "id": 5,
-      "question": "Co wywołuje nostalgię?",
+      "question": "Sport, w którym walczymy z przeciwnikiem, ale go nie dotykamy",
       "answers": [
-        { "text": "Stare zdjęcia", "points": 38 },
-        { "text": "Muzyka", "points": 25 },
-        { "text": "Zapachy", "points": 17 },
-        { "text": "Miejsca z dzieciństwa", "points": 12 },
-        { "text": "Stare filmy", "points": 8 }
+        { "text": "Tenis", "points": 31 },
+        { "text": "Ping-pong", "points": 24 },
+        { "text": "Siatkówka", "points": 18 },
+        { "text": "Badminton", "points": 12 },
+        { "text": "Szachy", "points": 8 }
+      ],
+      "multiplier": 2
+    },
+    {
+      "id": 6,
+      "question": "Państwo, którego nazwa kończy się na nia",
+      "answers": [
+        { "text": "Dania", "points": 28 },
+        { "text": "Hiszpania", "points": 18 },
+        { "text": "Japonia", "points": 10 },
+        { "text": "Estonia", "points": 5 },
+        { "text": "Rumunia", "points": 4 }
+      ],
+      "multiplier": 3
+    },
+    {
+      "id": 7,
+      "question": "Co potrafią robić ptaki?",
+      "answers": [
+        { "text": "Latać", "points": 36 },
+        { "text": "Śpiewać", "points": 24 },
+        { "text": "Znosić jaja", "points": 14 },
+        { "text": "Polować", "points": 12 },
+        { "text": "Wić gniazda", "points": 4 }
       ],
       "multiplier": 3
     }

@@ -1,16 +1,17 @@
 {
   "level": 1,
-  "name": "Poziom 1 – Łatwy",
+  "name": "Poziom 1",
   "rounds": [
     {
       "id": 1,
-      "question": "Czego ludzie szukają w lodówce o północy?",
+      "question": "Warzywa które smakują zarówno na surowo, jak i na ciepło",
       "answers": [
-        { "text": "Sera", "points": 35 },
-        { "text": "Wędliny", "points": 28 },
-        { "text": "Jogurtu", "points": 18 },
-        { "text": "Wody", "points": 12 },
-        { "text": "Owoców", "points": 7 }
+        { "text": "Marchew", "points": 29 },
+        { "text": "Kapusta", "points": 22 },
+        { "text": "Papryka", "points": 17 },
+        { "text": "Pomidor", "points": 11 },
+        { "text": "Cebula", "points": 8 },
+        { "text": "Kalafior", "points": 7 }
       ],
       "multiplier": 1
     },
@@ -34,9 +35,9 @@
         { "text": "Jemy słodycze", "points": 24 },
         { "text": "Krzyczymy", "points": 18 },
         { "text": "Płaczemy", "points": 14 },
-        { "text": "Gryzemy paznokcie", "points": 12 }
+        { "text": "Gryziemy paznokcie", "points": 12 }
       ],
-      "multiplier": 2
+      "multiplier": 1
     },
     {
       "id": 4,

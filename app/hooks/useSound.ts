@@ -2,12 +2,13 @@
 
 import { useRef, useCallback } from "react";
 
-export type SoundType = "intro" | "correct" | "wrong";
+export type SoundType = "intro" | "correct" | "wrong" | "buzzer";
 
 const SOUND_PATHS: Record<SoundType, string> = {
   intro: "/music/intro-familiada.mp3",
   correct: "/music/dobrze.mp3",
   wrong: "/music/blad.mp3",
+  buzzer: "/music/pew_pew.mp3",
 };
 
 export function useSound() {

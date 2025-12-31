@@ -2,9 +2,10 @@
 
 import { useState, useCallback, useEffect } from "react";
 import Link from "next/link";
-import type { LevelData } from "@/app/types/game";
+import type { LevelData, GameState } from "@/app/types/game";
 import GameBoard from "@/app/components/GameBoard";
 import { useSound } from "@/app/hooks/useSound";
+import { useGameStorage } from "@/app/hooks/useGameStorage";
 
 interface GameClientProps {
   levelData: LevelData;
@@ -21,22 +22,60 @@ interface GameResult {
 export default function GameClient({ levelData }: GameClientProps) {
   const [gameStatus, setGameStatus] = useState<GameStatus>("ready");
   const [gameResult, setGameResult] = useState<GameResult | null>(null);
+  const [initialGameState, setInitialGameState] = useState<GameState | null>(null);
+  const [isLoaded, setIsLoaded] = useState(false);
+
   const { play, stop } = useSound();
+  const { saveGame, loadGame, clearGame, hasStoredGame } = useGameStorage(levelData.level);
+
+  // Wczytaj zapisany stan gry przy starcie
+  useEffect(() => {
+    const storedData = loadGame();
+    if (storedData) {
+      setGameStatus(storedData.gameStatus);
+      setGameResult(storedData.gameResult);
+      if (storedData.gameState) {
+        setInitialGameState(storedData.gameState);
+      }
+    }
+    setIsLoaded(true);
+  }, [loadGame]);
+
+  // Zapisuj stan gry przy każdej zmianie statusu (ale nie gameState - to robi GameBoard)
+  useEffect(() => {
+    if (isLoaded) {
+      // Zapisujemy tylko gdy gra jest zakończona (gameState jest w GameBoard)
+      if (gameStatus === "finished" || gameStatus === "ready") {
+        saveGame({
+          gameStatus,
+          gameResult,
+          gameState: null,
+        });
+      }
+    }
+  }, [gameStatus, gameResult, saveGame, isLoaded]);
 
   // Odtwarzaj intro na ekranie startowym
   useEffect(() => {
-    if (gameStatus === "ready") {
+    if (gameStatus === "ready" && isLoaded) {
       play("intro");
     }
     return () => {
       stop("intro");
     };
-  }, [gameStatus, play, stop]);
+  }, [gameStatus, isLoaded, play, stop]);
 
   const handleStartGame = () => {
     stop("intro");
+    clearGame(); // Wyczyść poprzedni zapis przy nowej grze
+    setInitialGameState(null);
     setGameStatus("playing");
     setGameResult(null);
+  };
+
+  const handleContinueGame = () => {
+    stop("intro");
+    setGameStatus("playing");
   };
 
   const handleGameEnd = useCallback((finalScoreA: number, finalScoreB: number) => {
@@ -49,21 +88,49 @@ export default function GameClient({ levelData }: GameClientProps) {
       winner = "tie";
     }
 
-    setGameResult({
+    const result = {
       teamAScore: finalScoreA,
       teamBScore: finalScoreB,
       winner,
-    });
+    };
+
+    setGameResult(result);
     setGameStatus("finished");
-  }, []);
+    clearGame(); // Wyczyść zapis po zakończeniu gry
+  }, [clearGame]);
 
   const handlePlayAgain = () => {
+    clearGame();
+    setInitialGameState(null);
     setGameStatus("ready");
     setGameResult(null);
   };
 
+  // Callback do zapisywania stanu gry z GameBoard
+  const handleGameStateChange = useCallback(
+    (newGameState: GameState) => {
+      saveGame({
+        gameStatus: "playing",
+        gameResult: null,
+        gameState: newGameState,
+      });
+    },
+    [saveGame]
+  );
+
+  // Pokaż loader podczas wczytywania
+  if (!isLoaded) {
+    return (
+      <div className="game-board p-8 max-w-2xl mx-auto text-center">
+        <div className="text-2xl text-gray-400">Ładowanie...</div>
+      </div>
+    );
+  }
+
   // Ekran startowy
   if (gameStatus === "ready") {
+    const hasSavedGame = hasStoredGame();
+
     return (
       <div className="game-board p-8 max-w-2xl mx-auto text-center">
         <div className="mb-8">
@@ -98,19 +165,36 @@ export default function GameClient({ levelData }: GameClientProps) {
           </div>
         </div>
 
-        <button
-          onClick={handleStartGame}
-          className="btn-primary text-xl px-12 py-4"
-        >
-          Rozpocznij grę!
-        </button>
+        <div className="flex flex-col gap-4">
+          {hasSavedGame && (
+            <button
+              onClick={handleContinueGame}
+              className="btn-primary text-xl px-12 py-4"
+            >
+              ▶️ Kontynuuj grę
+            </button>
+          )}
+          <button
+            onClick={handleStartGame}
+            className={`${hasSavedGame ? "btn-secondary" : "btn-primary text-xl"} px-12 py-4`}
+          >
+            {hasSavedGame ? "🔄 Nowa gra" : "Rozpocznij grę!"}
+          </button>
+        </div>
       </div>
     );
   }
 
   // Ekran gry
   if (gameStatus === "playing") {
-    return <GameBoard levelData={levelData} onGameEnd={handleGameEnd} />;
+    return (
+      <GameBoard
+        levelData={levelData}
+        onGameEnd={handleGameEnd}
+        initialState={initialGameState}
+        onStateChange={handleGameStateChange}
+      />
+    );
   }
 
   // Ekran końcowy
@@ -179,4 +263,3 @@ export default function GameClient({ levelData }: GameClientProps) {
 
   return null;
 }
-

@@ -5,26 +5,40 @@ import type { LevelData, GameState, Answer } from "@/app/types/game";
 import AnswerTile from "./AnswerTile";
 import ScoreBoard from "./ScoreBoard";
 import QuestionDisplay from "./QuestionDisplay";
+import BuzzerModal from "./BuzzerModal";
 import { useSound } from "@/app/hooks/useSound";
 
 interface GameBoardProps {
   levelData: LevelData;
   onGameEnd: (finalScoreA: number, finalScoreB: number) => void;
+  initialState?: GameState | null;
+  onStateChange?: (state: GameState) => void;
 }
 
 const MAX_MISTAKES = 3;
 
-export default function GameBoard({ levelData, onGameEnd }: GameBoardProps) {
-  const [gameState, setGameState] = useState<GameState>({
-    currentRound: 0,
-    revealedAnswers: [],
-    teamAScore: 0,
-    teamBScore: 0,
-    currentTeam: "A",
-    mistakes: { A: 0, B: 0 },
-    roundScore: 0,
-    gamePhase: "playing",
-  });
+const DEFAULT_GAME_STATE: GameState = {
+  currentRound: 0,
+  revealedAnswers: [],
+  teamAScore: 0,
+  teamBScore: 0,
+  currentTeam: "A",
+  mistakes: { A: 0, B: 0 },
+  roundScore: 0,
+  gamePhase: "playing",
+};
+
+export default function GameBoard({
+  levelData,
+  onGameEnd,
+  initialState,
+  onStateChange,
+}: GameBoardProps) {
+  const [gameState, setGameState] = useState<GameState>(
+    initialState || DEFAULT_GAME_STATE
+  );
+  const [isBuzzerOpen, setIsBuzzerOpen] = useState(false);
+  const [isQuestionHidden, setIsQuestionHidden] = useState(true);
 
   const { play } = useSound();
   const currentRoundData = levelData.rounds[gameState.currentRound];
@@ -37,6 +51,13 @@ export default function GameBoard({ levelData, onGameEnd }: GameBoardProps) {
       onGameEnd(gameState.teamAScore, gameState.teamBScore);
     }
   }, [gameState.gamePhase, gameState.teamAScore, gameState.teamBScore, onGameEnd]);
+
+  // Zapisuj stan gry przy każdej zmianie
+  useEffect(() => {
+    if (onStateChange && gameState.gamePhase !== "gameEnd") {
+      onStateChange(gameState);
+    }
+  }, [gameState, onStateChange]);
 
   const calculateRoundScore = useCallback(
     (revealedIndexes: number[], multiplier: number): number => {
@@ -73,15 +94,22 @@ export default function GameBoard({ levelData, onGameEnd }: GameBoardProps) {
   // Obsługa klawiatury
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      // Ignoruj gdy focus jest na elemencie input/textarea
+      // Ignoruj gdy focus jest na elemencie input/textarea lub modal jest otwarty
       if (
         event.target instanceof HTMLInputElement ||
-        event.target instanceof HTMLTextAreaElement
+        event.target instanceof HTMLTextAreaElement ||
+        isBuzzerOpen
       ) {
         return;
       }
 
-      const key = event.key;
+      const key = event.key.toLowerCase();
+
+      // Klawisz Q pokazuje pytanie
+      if (key === "q" && isQuestionHidden) {
+        setIsQuestionHidden(false);
+        return;
+      }
 
       // Klawisze 1-9 odkrywają odpowiedzi (indeks 0-8)
       if (key >= "1" && key <= "9") {
@@ -103,6 +131,8 @@ export default function GameBoard({ levelData, onGameEnd }: GameBoardProps) {
     gameState.gamePhase,
     gameState.revealedAnswers,
     handleRevealAnswer,
+    isQuestionHidden,
+    isBuzzerOpen,
   ]);
 
   const handleMistake = useCallback(() => {
@@ -175,6 +205,8 @@ export default function GameBoard({ levelData, onGameEnd }: GameBoardProps) {
         gamePhase: "gameEnd",
       }));
     } else {
+      // Ukryj pytanie przy nowej rundzie
+      setIsQuestionHidden(true);
       setGameState((prev) => ({
         ...prev,
         currentRound: nextRound,
@@ -201,6 +233,21 @@ export default function GameBoard({ levelData, onGameEnd }: GameBoardProps) {
     }));
   }, [currentRoundData, calculateRoundScore]);
 
+  const handleOpenBuzzer = useCallback(() => {
+    setIsBuzzerOpen(true);
+  }, []);
+
+  const handleBuzzerClose = useCallback((winner: "A" | "B" | null) => {
+    setIsBuzzerOpen(false);
+    if (winner) {
+      setGameState((prev) => ({
+        ...prev,
+        currentTeam: winner,
+        mistakes: { A: 0, B: 0 },
+      }));
+    }
+  }, []);
+
   if (!currentRoundData) {
     return <div>Ładowanie...</div>;
   }
@@ -213,6 +260,8 @@ export default function GameBoard({ levelData, onGameEnd }: GameBoardProps) {
         roundNumber={gameState.currentRound + 1}
         totalRounds={levelData.rounds.length}
         multiplier={currentRoundData.multiplier}
+        isHidden={isQuestionHidden}
+        onReveal={() => setIsQuestionHidden(false)}
       />
 
       {/* Tablica wyników */}
@@ -262,6 +311,13 @@ export default function GameBoard({ levelData, onGameEnd }: GameBoardProps) {
       <div className="flex flex-wrap justify-center gap-4">
         {gameState.gamePhase === "playing" && (
           <>
+            <button
+              onClick={handleOpenBuzzer}
+              className="btn-secondary flex items-center gap-2"
+            >
+              <span className="text-yellow-400">🔔</span>
+              Kto pierwszy?
+            </button>
             <button
               onClick={handleMistake}
               className="btn-secondary flex items-center gap-2"
@@ -317,6 +373,9 @@ export default function GameBoard({ levelData, onGameEnd }: GameBoardProps) {
           </div>
         )}
       </div>
+
+      {/* Modal buzzer */}
+      <BuzzerModal isOpen={isBuzzerOpen} onClose={handleBuzzerClose} />
     </div>
   );
 }
